@@ -186,7 +186,7 @@ class FixedLengthFileParser implements ParserInterface
             $lastPosition = $i === $mapEntryCount-1 ? 0 : $lastPosition = $start + $this->choppingMap[$i]['length'];
 
             $name = $this->choppingMap[$i]['field_name'];
-            $currentLine[$name] = substr($buffer,
+            $currentLine[$name] = mb_substr($buffer,
                     $start,
                     $this->choppingMap[$i]['length']);
             $currentLine[$name] = trim($currentLine[$name]);
