@@ -126,10 +126,12 @@ class FixedLengthFileParser implements ParserInterface
     /**
      * Main method for parsing.
      *
+     * @param string|null $encoding
+     *
      * @return void
      * @throws ParserException
      */
-    public function parse()
+    public function parse($encoding = null)
     {
         //Check for file parameter
         if (!isset($this->file)) {
@@ -168,13 +170,19 @@ class FixedLengthFileParser implements ParserInterface
      * Handles a single line
      *
      * @param string $buffer
+     * @param string|null $encoding
+     *
      * @return array
      */
-    private function parseLine($buffer)
+    private function parseLine($buffer, $encoding = null)
     {
         $currentLine = array();
         $lastPosition = 0;
         $mapEntryCount = count($this->choppingMap);
+
+        if ($encoding) {
+            $buffer = iconv($encoding, 'UTF-8', $buffer);
+        }
 
         //Extract each field from the current line
         for ($i = 0; $i < $mapEntryCount; $i++) {
