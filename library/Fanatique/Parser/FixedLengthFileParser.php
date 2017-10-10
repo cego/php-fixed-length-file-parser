@@ -162,7 +162,7 @@ class FixedLengthFileParser implements ParserInterface
                 }
 
                 // Pass the current string buffer
-                $this->content[] = $this->parseLine($buffer);
+                $this->content[] = $this->parseLine($buffer, $encoding);
             }
         }
 
