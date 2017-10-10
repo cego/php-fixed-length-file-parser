@@ -2,7 +2,7 @@
 
 /**
  * php-fixed-length-file-parser
- * 
+ *
  * @link       https://github.com/fanatique/php-fixed-length-file-parser A parser class for handling fixed length text files in PHP
  * @license    http://sam.zoy.org/wtfpl/COPYING DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
  * @package    Fanatique
@@ -57,7 +57,7 @@ class FixedLengthFileParser implements ParserInterface
     /**
      * Expects an array with n arrays containing :
      * 'field_name', 'start', 'length'
-     * 
+     *
      * => array(
      *     array('field_name' => 'id,' 'start' => 0, 'length' => 2),
      *     ...
@@ -72,6 +72,7 @@ class FixedLengthFileParser implements ParserInterface
 
     /**
      * Setter for the file to be parsed
+     *
      * @param string $pathToFile /path/to/file.dat
      */
     public function setFilePath($pathToFile)
@@ -82,7 +83,7 @@ class FixedLengthFileParser implements ParserInterface
     /**
      * Setter for registering a closure that
      * evaluates if a fetched line needs to be parsed.
-     * 
+     *
      * The closure needs to
      * <ul>
      * <li>accept the unparsed current line as a string
@@ -99,7 +100,7 @@ class FixedLengthFileParser implements ParserInterface
     /**
      * Setter method for registering a callback which handles
      * each line *after* parsing.
-     * 
+     *
      * The closure needs to
      * <ul>
      * <li>accept the parsed current line as an associative array
@@ -133,22 +134,23 @@ class FixedLengthFileParser implements ParserInterface
      */
     public function parse($encoding = null)
     {
-        //Check for file parameter
+        // Check for file parameter
         if (!isset($this->file)) {
             throw new ParserException('No file was specified!');
         }
 
-        //Check for chopping map
+        // Check for chopping map
         if (!isset($this->choppingMap)) {
             throw new ParserException('A Chopping Map MUST be specified!');
         }
 
-        //Save pre check as local variable (as PHP does not recognize closures as class members)
+        // Save pre check as local variable (as PHP does not recognize closures as class members)
         $preflightCheck = $this->preflightCheck;
 
-        //Parse file line by line
+        // Parse file line by line
         $this->content = array();
         $filePointer = fopen($this->file, 'r');
+
         while (!feof($filePointer)) {
             $buffer = fgets($filePointer);
 
@@ -159,10 +161,11 @@ class FixedLengthFileParser implements ParserInterface
                     continue;
                 }
 
-                //Pass the current string buffer
+                // Pass the current string buffer
                 $this->content[] = $this->parseLine($buffer);
             }
         }
+
         fclose($filePointer);
     }
 
@@ -184,24 +187,21 @@ class FixedLengthFileParser implements ParserInterface
             $buffer = iconv($encoding, 'UTF-8', $buffer);
         }
 
-        //Extract each field from the current line
+        // Extract each field from the current line
         for ($i = 0; $i < $mapEntryCount; $i++) {
 
             // if start option was set, use it. otherwise use last known position
             $start = isset($this->choppingMap[$i]['start']) ? $this->choppingMap[$i]['start'] : $lastPosition;
 
             // last entry of map, reset position
-            $lastPosition = $i === $mapEntryCount-1 ? 0 : $lastPosition = $start + $this->choppingMap[$i]['length'];
+            $lastPosition = $i === $mapEntryCount - 1 ? 0 : $lastPosition = $start + $this->choppingMap[$i]['length'];
 
             $name = $this->choppingMap[$i]['field_name'];
-            $currentLine[$name] = mb_substr($buffer,
-                    $start,
-                    $this->choppingMap[$i]['length']);
+            $currentLine[$name] = mb_substr($buffer, $start, $this->choppingMap[$i]['length']);
             $currentLine[$name] = trim($currentLine[$name]);
-
         }
 
-        //Store callback as local variable (as PHP does not recognize closures as class members)
+        // Store callback as local variable (as PHP does not recognize closures as class members)
         $callback = $this->callback;
 
         /**
@@ -213,5 +213,4 @@ class FixedLengthFileParser implements ParserInterface
 
         return $currentLine;
     }
-
 }
