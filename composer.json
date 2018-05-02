@@ -1,9 +1,9 @@
 {
-	"name": "fanatique/php-fixed-length-file-parser",
+    "name": "fanatique/php-fixed-length-file-parser",
     "description": "A parser class for handling fixed length text files in PHP",
     "keywords": ["php", "text", "parser", "fixed length"],
     "homepage": "https://github.com/fanatique/php-fixed-length-file-parser",
-	"license": "MIT",
+    "license": "MIT",
     "authors": [
         {
             "name": "Alexander Thomas",
@@ -17,6 +17,6 @@
         }
     },
     "require": {
-		"php": ">=5.3.0"
+        "php": ">=5.3.0"
     }
 }
