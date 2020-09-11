@@ -11,7 +11,7 @@
 
 namespace Fanatique\Parser;
 
-use Exception;
+use RuntimeException;
 
 /**
  * Fixed Length File Parser
@@ -20,7 +20,7 @@ use Exception;
  * @package    Parser
  * @subpackage Exception
  */
-class ParserException extends Exception
+class ParserException extends RuntimeException
 {
 
 }
