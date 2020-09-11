@@ -153,7 +153,11 @@ class FixedLengthFileParser implements ParserInterface
         $this->content = array();
         $filePointer = fopen($this->file, 'r');
 
-        while (!feof($filePointer)) {
+        if (!$filePointer) {
+            throw new ParserException(sprintf('Failed to open file "%s" for reading', $this->file));
+        }
+
+        while ($filePointer && !feof($filePointer)) {
             $buffer = fgets($filePointer);
 
             if (!empty($buffer)) {
