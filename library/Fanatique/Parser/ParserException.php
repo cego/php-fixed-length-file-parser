@@ -2,7 +2,7 @@
 
 /**
  * php-fixed-length-file-parser
- * 
+ *
  * @link       https://github.com/fanatique/php-fixed-length-file-parser A parser class for handling fixed length text files in PHP
  * @license    http://sam.zoy.org/wtfpl/COPYING DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
  * @package    Fanatique
@@ -11,6 +11,8 @@
 
 namespace Fanatique\Parser;
 
+use Exception;
+
 /**
  * Fixed Length File Parser
  *
@@ -18,7 +20,7 @@ namespace Fanatique\Parser;
  * @package    Parser
  * @subpackage Exception
  */
-class ParserException extends \Exception
+class ParserException extends Exception
 {
-    
+
 }
