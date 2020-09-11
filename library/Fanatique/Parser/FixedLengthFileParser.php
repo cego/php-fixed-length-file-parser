@@ -11,6 +11,8 @@
 
 namespace Fanatique\Parser;
 
+use Closure;
+
 /**
  * Fixed Length File Parser
  *
@@ -90,9 +92,9 @@ class FixedLengthFileParser implements ParserInterface
      * <li>return a boolean value indicating whether or not this line should be parsed
      * </ul>
      *
-     * @param \Closure $preflightCheck
+     * @param Closure $preflightCheck
      */
-    public function setPreflightCheck(\Closure $preflightCheck)
+    public function setPreflightCheck(Closure $preflightCheck)
     {
         $this->preflightCheck = $preflightCheck;
     }
@@ -107,9 +109,9 @@ class FixedLengthFileParser implements ParserInterface
      * <li>return an associative array in the current file's format
      * </ul>
      *
-     * @param \Closure $callback
+     * @param Closure $callback
      */
-    public function setCallback(\Closure $callback)
+    public function setCallback(Closure $callback)
     {
         $this->callback = $callback;
     }
@@ -157,7 +159,7 @@ class FixedLengthFileParser implements ParserInterface
             if (!empty($buffer)) {
                 // If a pre check was registered and it returns not true - the current line
                 // does not need to be parsed
-                if ($preflightCheck instanceof \Closure && $preflightCheck($buffer) !== true) {
+                if ($preflightCheck instanceof Closure && $preflightCheck($buffer) !== true) {
                     continue;
                 }
 
@@ -207,7 +209,7 @@ class FixedLengthFileParser implements ParserInterface
         /**
          * If a call back function was registered - apply it to the current line
          */
-        if ($callback instanceof \Closure) {
+        if ($callback instanceof Closure) {
             $currentLine = $callback($currentLine);
         }
 
